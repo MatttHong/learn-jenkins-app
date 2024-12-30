@@ -5,9 +5,7 @@ pipeline {
         NETLIFY_AUTH_TOKEN = credentials('netlify-token')
     }
 
-
     stages {
-
         stage('Build') {
             agent {
                 docker {
@@ -75,6 +73,7 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy Staging') {
             agent {
                 docker {
@@ -94,9 +93,10 @@ pipeline {
                 '''
                 script {
                     env.STAGING_URL = sh(script: 'node_modules/.bin/node-jq -r ".deploy_url" deploy-output.json', returnStdout: true)
-                    }
+                }
             }
         }
+
         stage('Staging E2E') {
             agent {
                 docker {
@@ -121,7 +121,7 @@ pipeline {
                 }
             }
         }
-        }
+
         stage('Approval') {
             steps {
                 timeout(time: 15, unit: 'MINUTES') {
@@ -129,6 +129,7 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy Production') {
             agent {
                 docker {
