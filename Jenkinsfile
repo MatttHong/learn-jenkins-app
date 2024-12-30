@@ -106,7 +106,7 @@ pipeline {
             }
 
             environment {
-                CI_ENVIRONMENT_URL = '${env.STAGING_URL}'
+                CI_ENVIRONMENT_URL = "${env.STAGING_URL}"
             }
 
             steps {
@@ -129,7 +129,6 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy Production') {
             agent {
                 docker {
